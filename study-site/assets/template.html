@@ -67,6 +67,8 @@ figure.fig figcaption{font-size:14px;color:var(--muted);margin-top:8px}
 .copy-btn{position:absolute;top:8px;right:8px;opacity:0;transition:opacity .15s;font-size:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:6px;padding:4px 8px;cursor:pointer}
 figure.fig:hover .copy-btn,.copy-btn:focus{opacity:1}
 @media (hover:none){.copy-btn{opacity:.85}}
+.copyfallback{margin-top:10px;font-size:13px;color:var(--muted)}
+.copyfallback img{display:block;max-width:100%;margin:6px auto 0;border:1px solid var(--border);border-radius:6px}
 .stepper .step-nav{display:flex;justify-content:center;align-items:center;gap:12px;font-size:14px;margin-top:8px}
 .stepper .step-nav button{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:6px;padding:5px 12px;cursor:pointer}
 .stepper .step-nav button:disabled{opacity:.4;cursor:default}
@@ -220,7 +222,7 @@ function flashMsg(b,m){const o=b.textContent;b.textContent=m;setTimeout(()=>b.te
 $$('figure.fig').forEach((f,i)=>{const b=document.createElement('button');b.className='copy-btn ui';b.textContent='Copy image';f.appendChild(b);
   b.onclick=async()=>{const el=f.querySelector('svg,img,canvas');if(!el)return;
     try{await navigator.clipboard.write([new ClipboardItem({'image/png':toPng(el)})]);flashMsg(b,'Copied ✓');}
-    catch(e){try{const blob=await toPng(el);const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(f.id||'figure-'+(i+1))+'.png';a.click();flashMsg(b,'Downloaded');}catch(_){flashMsg(b,'Copy failed');}}};});
+    catch(e){try{const blob=await toPng(el);let fb=f.querySelector('.copyfallback');if(!fb){fb=document.createElement('div');fb.className='copyfallback ui';f.appendChild(fb);}fb.innerHTML='Clipboard is blocked in this viewer. Press and hold (or right-click) the image to copy it.<img alt="Figure as an image">';fb.querySelector('img').src=URL.createObjectURL(blob);flashMsg(b,'Image shown below');}catch(_){flashMsg(b,'Copy failed');}}};});
 
 /* Step-through diagrams */
 $$('.stepper').forEach(s=>{const steps=[...s.querySelectorAll('.step')];if(!steps.length)return;let i=0;const nav=document.createElement('div');nav.className='step-nav ui';nav.innerHTML='<button>← Prev</button><span></span><button>Next →</button>';s.appendChild(nav);const[p,lab,n]=nav.children;
