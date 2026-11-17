@@ -60,7 +60,7 @@ Pick the closest row for an unlisted subject. The user's own course notes overri
 
 | Feature | How it works | Your job |
 |---|---|---|
-| Light theme + dark toggle | Light by default; 🌙 toggles; choice remembered | Use only the CSS variables — no hard-coded colours |
+| Light theme + dark toggle | Light by default; a sliding sun/moon switch in the header toggles; choice remembered | Use only the CSS variables — no hard-coded colours |
 | Scroll restore | Position saved and restored on reopen | Nothing |
 | Progress tracking (chapter pages only) | "Mark as done" per topic; a progress ring with the % done; a sticky strip showing the current section and % done; practice answered/correct counts; ✓ in contents | Unique `id` on each topic section. Exam mode isn't counted. **Never put this on index pages** |
 | Search | Filters topics and highlights hits | Nothing |
