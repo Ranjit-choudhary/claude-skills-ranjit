@@ -20,7 +20,7 @@ Build interactive, single-file HTML study pages, published as artifacts (or save
 
 Ask only what isn't already clear from the request:
 
-1. **Is this for a course?** If yes: which course, which chapter or chunk. A course page gets **exam mode and revision tools** on top of the standard features; a non-course page (general topic, one-off explainer) skips them.
+1. **Is this for a course?** If yes: which course, which chapter or chunk. A course page gets **revision tools and likely exam questions (with solutions)** on top of the standard features; a non-course page (general topic, one-off explainer) skips them.
 2. **Where should it be listed?** Directly on the master index, inside a course study index (which one), or nowhere. Skip this question if the master index setting is `none`.
 3. If the course's study index URL isn't known, ask for it — the page's back link needs it.
 
@@ -41,6 +41,7 @@ If the user has saved notes on how they want a course taught (memory, project in
 - Mark exam-important points with `.callout.imp` and common traps with `.callout.mistake`.
 - **Questions:** write every question out in full before its solution, never condensed. Answer every question; leave none unanswered. Tag PYQs with source, year and marks (e.g. `PYQ 2024 Midsem · 5M`).
 - At least 3 practice MCQs per topic, with plausible distractors and a `.why` explanation.
+- **Likely exam questions (course pages):** a final module of questions the exam is likely to ask, drawn from past papers and the syllabus. Write each question in full, tagged `Likely · Qn · xM`, with a complete worked solution inside `details.answer` ("Show solution"). No timed exam mode.
 - Diagrams are inline SVG, never ASCII. Use a `.stepper` (one `figure.fig.step` per state) for anything that evolves step by step.
 - No study schedules or day plans unless asked.
 
@@ -60,30 +61,31 @@ Pick the closest row for an unlisted subject. The user's own course notes overri
 
 | Feature | How it works | Your job |
 |---|---|---|
-| Light theme + dark toggle | Light by default; a sliding sun/moon switch in the header toggles; choice remembered | Use only the CSS variables — no hard-coded colours |
-| Scroll restore | Position saved and restored on reopen | Nothing |
-| Progress tracking (chapter pages only) | "Mark as done" per topic; a progress ring with the % done; a sticky strip showing the current section and % done; practice answered/correct counts; ✓ in contents | Unique `id` on each topic section. Exam mode isn't counted. **Never put this on index pages** |
-| Search | Filters topics and highlights hits | Nothing |
-| Copy image | Hover button on every `figure.fig` copies a PNG (always visible on touch) | Wrap **every** diagram or image in `figure.fig` |
+| Light theme + dark switch | Light by default; a small sliding sun/moon switch in the header; choice remembered | Use only the CSS variables — no hard-coded colours |
+| Scroll restore | Position saved and restored on reopen (after fonts load) | Nothing |
+| Reading progress (chapter pages only) | % rises as you scroll: thin bar under the header, % in the sticky strip next to the current section name, and a ring card at the top with modules done / practice answered / correct | Nothing. **Never put this on index pages** |
+| Mark as done | Tick box with "Mark as done" at the **bottom** of each module (box on the left); ✓ in the contents | Unique `id` on each module section |
+| Find | Search icon in the header opens a small find bar; highlights hits and hides non-matching modules | Nothing |
+| Copy image | Hover button on every `figure.fig` copies a PNG (always visible on touch); if the clipboard is blocked, shows the image to press-and-hold | Wrap **every** diagram or image in `figure.fig` |
 | Mobile friendly | Responsive; tables scroll sideways | Keep SVG `viewBox`-based; no fixed widths |
 | Practice MCQs | Instant feedback; answers remembered | `data-answer` = 0-based index of the right option |
 | Show answer | `details.answer` | Use for every long-form solution |
 | Back link | Header links to the course study index | Fill `{{COURSE_INDEX_URL}}` |
-| **Course pages only:** revision tools | Cheat sheet (`.cheatsheet`) + flashcards (`.flashdeck`) | One-page summary of formulas, definitions, key diagrams; 10+ flashcards |
-| **Course pages only:** exam mode | Blurred until Start; timer; MCQs graded on Submit; model answers revealed | Mix MCQs (`data-marks`) and long questions styled after the course's past papers; set `data-minutes` |
+| **Course pages only:** revision tools | Cheat sheet (`.cheatsheet`) + flashcards (`.flashdeck`, term/answer cards) | One-page summary of formulas, definitions, key diagrams; 10+ flashcards |
+| **Course pages only:** likely exam questions | Module of `.pyq` items tagged `Likely · Qn · xM`, each with a "Show solution" | Style them after the course's past papers; full solutions |
 
 Progress and scores live in the viewer's browser, per page — an index page can't show chapter progress, and nothing syncs across devices.
 
 ## 6. Design rules
 
-- Minimal and calm. Serif body for long reading, sans-serif UI. Content width ~820px.
-- Avoid AI-slop: no purple gradients, hero banners, everything-centred layouts, Inter, or emoji confetti.
+- Minimal and calm, like a clean paper page: hairline rules, one indigo accent, generous spacing. Fonts: Literata (headings), Source Sans 3 (body), JetBrains Mono (small labels). Content width ~820px.
+- Avoid AI-slop: no gradients, hero banners, everything-centred layouts, Inter, or emoji.
 - Colour carries meaning: blue = info, gold = exam-important, red = mistake, green = correct/done.
 - SVG diagrams: label everything; use `var(--text)`, `var(--accent)` etc. for strokes and fills; text ≥12px at mobile width.
 
 ## 7. Course study index pages
 
-For a course index or hub: minimal cards (see settings), same header (search + theme toggle), scroll restore, light default. **Don't build index pages from the chapter template:** no progress ring, % strip, "Mark as done" buttons or stat counters — those belong only on chapter pages.
+For a course index or hub: minimal cards (see settings), same header (find icon + theme switch), scroll restore, light default. **Don't build index pages from the chapter template:** no progress ring, % strip, "Mark as done" tick boxes or stat counters — those belong only on chapter pages.
 
 ## 8. Build, publish, check
 
