@@ -62,7 +62,7 @@ Pick the closest row for an unlisted subject. The user's own course notes overri
 |---|---|---|
 | Light theme + dark toggle | Light by default; 🌙 toggles; choice remembered | Use only the CSS variables — no hard-coded colours |
 | Scroll restore | Position saved and restored on reopen | Nothing |
-| Progress tracking | "Mark as done" per topic, progress bar, ✓ in contents | Unique `id` on each topic section |
+| Progress tracking (chapter pages only) | "Mark as done" per topic; a progress ring with the % done; a sticky strip showing the current section and % done; practice answered/correct counts; ✓ in contents | Unique `id` on each topic section. Exam mode isn't counted. **Never put this on index pages** |
 | Search | Filters topics and highlights hits | Nothing |
 | Copy image | Hover button on every `figure.fig` copies a PNG (always visible on touch) | Wrap **every** diagram or image in `figure.fig` |
 | Mobile friendly | Responsive; tables scroll sideways | Keep SVG `viewBox`-based; no fixed widths |
@@ -83,7 +83,7 @@ Progress and scores live in the viewer's browser, per page — an index page can
 
 ## 7. Course study index pages
 
-For a course index or hub: minimal cards (see settings), same header (search + theme toggle), scroll restore, light default.
+For a course index or hub: minimal cards (see settings), same header (search + theme toggle), scroll restore, light default. **Don't build index pages from the chapter template:** no progress ring, % strip, "Mark as done" buttons or stat counters — those belong only on chapter pages.
 
 ## 8. Build, publish, check
 

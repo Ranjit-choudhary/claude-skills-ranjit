@@ -6,7 +6,7 @@ Agent Skills I use with Claude. Each folder is one skill: a `SKILL.md` with inst
 
 | Skill | What it does |
 |---|---|
-| [study-site](study-site/) | Turns slides, PDFs, past papers or a topic into an interactive single-file study page: progress tracking, search, step-through SVG diagrams, practice MCQs, flashcards, a timed exam mode, light/dark theme, scroll restore and copy-image buttons. Teaching style adapts to the subject. |
+| [study-site](study-site/) | Turns slides, PDFs, past papers or a topic into an interactive single-file study page: a progress ring with % done, search, step-through SVG diagrams, practice MCQs, flashcards, a timed exam mode, light/dark theme, scroll restore and copy-image buttons. Teaching style adapts to the subject. |
 
 ## Install
 
