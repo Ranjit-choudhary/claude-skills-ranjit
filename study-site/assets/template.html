@@ -66,8 +66,8 @@ h1{font:650 clamp(1.7rem,5vw,2.2rem)/1.2 var(--serif);margin:.35rem 0 0;text-wra
 nav#toc{margin:0 0 2rem}
 .lab{font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:1.8rem 0 .1rem}
 nav#toc .lab{margin:0 0 .4rem}
-nav#toc ol{list-style:none;counter-reset:t;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.1rem 1.5rem}
-nav#toc li{counter-increment:t;margin:.1rem 0;display:flex;gap:.55rem;align-items:baseline}
+nav#toc ol{list-style:none;counter-reset:t;margin:0;padding:0;columns:2 15rem;column-gap:1.5rem}
+nav#toc li{counter-increment:t;margin:.1rem 0;display:flex;gap:.55rem;align-items:baseline;break-inside:avoid}
 nav#toc li::before{content:counter(t,decimal-leading-zero);flex:none;font:500 .78rem var(--mono);color:var(--accent)}
 nav#toc a{color:var(--text);text-decoration:none}
 nav#toc a:hover{color:var(--accent)}
