@@ -87,6 +87,9 @@ Progress and scores live in the viewer's browser, per page — an index page can
 
 For a course index or hub: minimal cards (see settings), same header (find icon + theme switch), scroll restore, light default. **Don't build index pages from the chapter template:** no progress ring, % strip, "Mark as done" tick boxes or stat counters — those belong only on chapter pages.
 
+- **Module cards:** title (linked), section numbers and the "Mark done" toggle only. No status labels under a card ("Ready", "Not built yet" and the like).
+- **Past papers:** list only the papers the pages were built from, by name and year (e.g. "End-Semester Examination, 2025"). Don't map questions to the modules where they're solved.
+
 ## 8. Build, publish, check
 
 1. Copy `assets/template.html`, fill the `{{placeholders}}`, delete the course-only blocks for non-course pages (or uncomment them for course pages).
