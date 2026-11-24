@@ -87,8 +87,10 @@ Progress and scores live in the viewer's browser, per page — an index page can
 
 For a course index or hub: minimal cards (see settings), same header (find icon + theme switch), scroll restore, light default. **Don't build index pages from the chapter template:** no progress ring, % strip, "Mark as done" tick boxes or stat counters — those belong only on chapter pages.
 
+- **Top of the index:** meta line, title, then **one line** saying which lectures it was built from (e.g. "Built from lectures 21–24 so far."). No intro paragraph describing the modules, what each contains or how long they take.
 - **Module cards:** title (linked), section numbers and the "Mark done" toggle only. No status labels under a card ("Ready", "Not built yet" and the like).
-- **Past papers:** list only the papers the pages were built from, by name and year (e.g. "End-Semester Examination, 2025"). Don't map questions to the modules where they're solved.
+- **Leave out:** a full topic-by-topic breakdown of every module, and an exam-pattern / evaluation table copied from the course handout.
+- **Past papers used:** a short list (chips) of only the papers the pages were built from, by name and year (e.g. "End-Semester Examination, 2025"). Tutorials used can go in one muted line under it. No table mapping each question to the module or topic where it's solved.
 
 ## 8. Build, publish, check
 
