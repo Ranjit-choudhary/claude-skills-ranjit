@@ -75,10 +75,11 @@ nav#toc li.done a::after{content:" ✓";color:var(--good);font-weight:700}
 
 /* ---- modules ---- */
 section.topic{border-top:1px solid var(--border);margin-top:2.8rem;padding-top:1.2rem}
-section.topic>h2{font:650 1.5rem/1.25 var(--serif);margin:0 0 .7rem;text-wrap:balance}
+section.topic>h2{font:650 1.5rem/1.25 var(--serif);margin:0 0 .7rem;text-wrap:balance;display:flex;flex-wrap:wrap;align-items:center}
+h3{font:650 1.15rem/1.3 var(--serif);margin:1.6rem 0 .5rem;display:flex;flex-wrap:wrap;align-items:center}
 section.topic:not(.extra)>h2::before{content:"Module " attr(data-mod)}
 section.extra>h2::before{content:attr(data-kicker)}
-section.topic>h2::before{display:block;font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.35rem}
+section.topic>h2::before{display:block;flex:0 0 100%;font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.35rem}
 .hidden-by-search{display:none}
 .done-tick{display:flex;align-items:center;gap:.6rem;margin-top:1.8rem;padding-top:.9rem;border-top:1px dashed var(--border);font:600 .92rem var(--sans);color:var(--muted);cursor:pointer}
 .done-tick input{width:1.15rem;height:1.15rem;margin:0;accent-color:var(--good);cursor:pointer}
@@ -102,11 +103,30 @@ th{font:500 .7rem var(--mono);letter-spacing:.05em;text-transform:uppercase;colo
 /* ---- figures ---- */
 figure.fig{position:relative;margin:1.4rem 0;padding:.8rem;border:1px solid var(--border);border-radius:8px;background:var(--bg)}
 figure.fig svg,figure.fig img,figure.fig canvas{display:block;max-width:100%;height:auto;margin:0 auto}
-figure.fig figcaption{margin-top:.5rem;text-align:center;font:400 .85rem var(--sans);color:var(--muted)}
-.copy-btn{position:absolute;top:.5rem;right:.5rem;z-index:2;display:inline-flex;align-items:center;gap:.35rem;font:600 .72rem/1 var(--sans);color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:.35rem .55rem;cursor:pointer;opacity:0;transition:opacity .15s}
-.copy-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-figure.fig:hover .copy-btn,.copy-btn:focus-visible{opacity:1}
-@media (hover:none){.copy-btn{opacity:1}}
+figure.fig figcaption{margin-top:.5rem;padding:0 40px;text-align:center;font:400 .85rem var(--sans);color:var(--muted)}
+/* copy buttons: bare icon, shown on hover (always faintly visible on touch screens) */
+.cpy{display:inline-grid;place-items:center;flex:none;width:30px;height:30px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;opacity:0;transition:opacity .15s,background .15s,color .15s}
+.cpy:hover{background:var(--surface);color:var(--text)}
+.cpy svg,figure.fig .cpy svg{display:block;width:16px;height:16px;max-width:none;margin:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.has-cpy>.cpy{margin-left:auto}
+.has-cpy:hover>.cpy,figure.fig:hover>.cpy,.cpy:focus-visible,.cpy.ok{opacity:1}
+.cpy.ok{color:var(--good)}
+@media (hover:none){.cpy{opacity:.55}}
+figure.fig>.cpy{position:absolute;top:6px;right:6px;z-index:2;background:var(--bg);box-shadow:0 0 0 1px var(--border)}
+figure.fig>.cpy:hover{background:var(--surface)}
+figure.fig.paper>.cpy{background:#fff;color:#555;box-shadow:0 0 0 1px #c9ccd3}   /* images that are always white (scanned papers) */
+figure.fig.paper>.cpy:hover{background:#f1f2f5;color:#111}
+.pyq-head{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}
+.pyq-head .tag{margin-bottom:0}
+.cpbox{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(0,0,0,.45);padding:16px}
+.cpbox div{width:min(34rem,100%);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem}
+.cpbox p{margin:0 0 .5rem;font:400 .85rem var(--sans);color:var(--muted)}
+.cpbox textarea{width:100%;height:11rem;font:.8rem/1.5 var(--mono);color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.5rem}
+.cpbox button{margin-top:.6rem;font:600 .85rem var(--sans);color:var(--text);background:transparent;border:1px solid var(--border);border-radius:6px;padding:.35rem .9rem;cursor:pointer}
+/* equations (MathJax, optional): hidden TeX copy for select-and-copy; long inline equations scroll instead of widening the page */
+.mjx-copy{font-size:0;line-height:0;color:transparent;white-space:nowrap}
+mjx-container.mjx-wide{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%}
 .copyfallback{margin-top:.6rem;font:400 .8rem var(--sans);color:var(--muted)}
 .copyfallback img{border:1px solid var(--border);border-radius:6px;margin-top:.4rem}
 .stepper .step-nav{display:flex;justify-content:center;align-items:center;gap:.8rem;margin-top:.5rem;font:500 .8rem var(--mono);color:var(--muted)}
@@ -159,6 +179,11 @@ figure.fig:hover .copy-btn,.copy-btn:focus-visible{opacity:1}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<!-- Maths-heavy pages only: uncomment to render equations ($…$ inline, $$…$$ display). The copy buttons and select-and-copy then keep the LaTeX. -->
+<!--
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']]},options:{menuOptions:{settings:{assistiveMml:false}}},startup:{pageReady:()=>MathJax.startup.defaultPageReady().then(()=>window.__mjxTag&&window.__mjxTag())}};</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+-->
 </head>
 <body>
 <!-- CHAPTER PAGE template. Index / hub pages must NOT use it: no progress ring, % bar or "Mark as done" there. -->
@@ -281,7 +306,32 @@ $('#searchBtn').onclick=()=>{if(sRow.hidden){sRow.hidden=false;search.focus();}e
 $('#searchClose').onclick=closeSearch;
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!sRow.hidden)closeSearch();});
 
-/* Copy-image button on every figure (SVG / img / canvas → PNG) */
+/* Equations (only when MathJax is loaded): tag each equation with hidden TeX, keep long inline ones inside the page width */
+function fitWide(){document.querySelectorAll('mjx-container:not([display="true"])').forEach(c=>{c.classList.remove('mjx-wide');const p=c.parentElement,cs=getComputedStyle(p),avail=p.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),v=c.querySelector('svg');if(v&&v.getBoundingClientRect().width>avail)c.classList.add('mjx-wide');});}
+window.__mjxTag=function(){try{for(const m of MathJax.startup.document.math){const c=m.typesetRoot;if(!c||c.querySelector('.mjx-copy'))continue;const t=document.createElement('span');t.className='mjx-copy';t.textContent=m.display?'$$'+m.math+'$$':'$'+m.math+'$';c.appendChild(t);}}catch(e){}fitWide();};
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(fitWide,150);});
+if(window.MathJax&&MathJax.startup&&MathJax.startup.document)window.__mjxTag();
+
+/* Copy buttons: headings, solved questions and figures */
+const ICON_COPY='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>',ICON_OK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+function makeBtn(label){const b=document.createElement('button');b.type='button';b.className='cpy';b.title=label;b.setAttribute('aria-label',label);b.innerHTML=ICON_COPY;return b;}
+function okFlash(b){b.classList.add('ok');b.innerHTML=ICON_OK;b.title='Copied';setTimeout(()=>{b.classList.remove('ok');b.innerHTML=ICON_COPY;b.title=b.getAttribute('aria-label');},2000);}
+function textBox(text){const o=document.createElement('div');o.className='cpbox';o.innerHTML='<div><p>Clipboard is blocked here. The text is selected: copy it by hand.</p><textarea readonly></textarea><button type="button">Close</button></div>';const ta=o.querySelector('textarea');ta.value=text;document.body.appendChild(o);ta.focus();ta.select();o.querySelector('button').onclick=()=>o.remove();o.onclick=e=>{if(e.target===o)o.remove();};}
+async function copyText(text,b){try{await navigator.clipboard.writeText(text);okFlash(b);}catch(e){textBox(text);}}
+/* Block -> Markdown-ish text: buttons, canvases and controls dropped, answers opened, figures as [Figure: caption], equations as their TeX */
+function blockText(nodes){const box=document.createElement('div');box.style.cssText='position:absolute;left:-9999px;top:0;width:44rem';nodes.forEach(n=>box.appendChild(n.cloneNode(true)));document.body.appendChild(box);
+  box.querySelectorAll('.cpy,canvas,.done-tick,.step-nav,.copyfallback,script,style').forEach(x=>x.remove());
+  box.querySelectorAll('details').forEach(d=>d.open=true);box.querySelectorAll('[hidden]').forEach(x=>x.hidden=false);
+  box.querySelectorAll('figure').forEach(f=>{const c=f.querySelector('figcaption');f.replaceWith(document.createTextNode('[Figure: '+(c?c.textContent.trim():'diagram')+']'));});
+  box.querySelectorAll('mjx-container').forEach(m=>{const t=m.querySelector('.mjx-copy');m.replaceWith(document.createTextNode(t?t.textContent:''));});
+  box.querySelectorAll('h2').forEach(h=>h.prepend('## '));box.querySelectorAll('h3').forEach(h=>h.prepend('### '));
+  box.querySelectorAll('*').forEach(x=>x.style.textTransform='none');const out=box.innerText.replace(/\n{3,}/g,'\n\n').trim();box.remove();return out;}
+function addCopy(host,getNodes,label){const b=makeBtn(label);host.classList.add('has-cpy');host.appendChild(b);b.onclick=e=>{e.preventDefault();e.stopPropagation();copyText(blockText(getNodes()),b);};}
+$$('section.topic>h2').forEach(h=>addCopy(h,()=>[h.parentElement],'Copy this section'));
+$$('section.topic h3').forEach(h=>addCopy(h,()=>{const n=[h];let x=h.nextElementSibling;while(x&&!/^H[23]$/.test(x.tagName)){n.push(x);x=x.nextElementSibling;}return n;},'Copy this part'));
+$$('.pyq').forEach(q=>{const t=q.querySelector('.tag');if(!t)return;const head=document.createElement('div');head.className='pyq-head';t.replaceWith(head);head.appendChild(t);addCopy(head,()=>[q],'Copy this question and its solution');});
+
+/* Copy-image button on every figure (SVG / img / canvas -> PNG) */
 function svgToPng(el){const clone=el.cloneNode(true);const src=[el,...el.querySelectorAll('*')],dst=[clone,...clone.querySelectorAll('*')];
   src.forEach((n,i)=>{const cs=getComputedStyle(n);['fill','stroke','stroke-width','stroke-dasharray','color','font-family','font-size','font-weight','opacity'].forEach(p=>dst[i].style.setProperty(p,cs.getPropertyValue(p)));});
   const r=el.getBoundingClientRect(),sc=2;clone.setAttribute('xmlns','http://www.w3.org/2000/svg');clone.setAttribute('width',r.width);clone.setAttribute('height',r.height);
@@ -289,11 +339,10 @@ function svgToPng(el){const clone=el.cloneNode(true);const src=[el,...el.querySe
   return new Promise((ok,no)=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=r.width*sc;c.height=r.height*sc;const x=c.getContext('2d');x.fillStyle=getComputedStyle(document.body).backgroundColor;x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);c.toBlob(b=>b?ok(b):no(),'image/png');};img.onerror=no;img.src=url;});}
 function toPng(el){const tag=el.tagName.toLowerCase();if(tag==='svg')return svgToPng(el);
   return new Promise((ok,no)=>{let c=el;if(tag==='img'){c=document.createElement('canvas');c.width=el.naturalWidth;c.height=el.naturalHeight;c.getContext('2d').drawImage(el,0,0);}try{c.toBlob(b=>b?ok(b):no(),'image/png');}catch(e){no(e);}});}
-function flashMsg(b,m){const s=b.querySelector('span'),o=s.textContent;s.textContent=m;setTimeout(()=>s.textContent=o,1400);}
-$$('figure.fig').forEach(f=>{const b=document.createElement('button');b.className='copy-btn';b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><span>Copy image</span>';f.appendChild(b);
-  b.onclick=async()=>{const el=f.querySelector('svg,img,canvas');if(!el)return;
-    try{await navigator.clipboard.write([new ClipboardItem({'image/png':toPng(el)})]);flashMsg(b,'Copied ✓');}
-    catch(e){try{const blob=await toPng(el);let fb=f.querySelector('.copyfallback');if(!fb){fb=document.createElement('div');fb.className='copyfallback';f.appendChild(fb);}fb.innerHTML='Clipboard is blocked in this viewer. Press and hold (or right-click) the image to copy it.<img alt="Figure as an image">';fb.querySelector('img').src=URL.createObjectURL(blob);flashMsg(b,'Image shown below');}catch(_){flashMsg(b,'Copy failed');}}};});
+$$('figure.fig').forEach(f=>{const b=makeBtn('Copy image');f.appendChild(b);
+  b.onclick=async()=>{const el=f.querySelector('svg:not(.cpy svg),img,canvas');if(!el)return;
+    try{await navigator.clipboard.write([new ClipboardItem({'image/png':toPng(el)})]);okFlash(b);}
+    catch(e){try{const blob=await toPng(el);let fb=f.querySelector('.copyfallback');if(!fb){fb=document.createElement('div');fb.className='copyfallback';f.appendChild(fb);}fb.innerHTML='Clipboard is blocked in this viewer. Press and hold (or right-click) the image to copy it.<img alt="Figure as an image">';fb.querySelector('img').src=URL.createObjectURL(blob);}catch(_){}}};});
 
 /* Step-through diagrams */
 $$('.stepper').forEach(s=>{const steps=[...s.querySelectorAll('.step')];if(!steps.length)return;let i=0;const nav=document.createElement('div');nav.className='step-nav';nav.innerHTML='<button>← Prev</button><span></span><button>Next →</button>';s.appendChild(nav);const[p,lab,n]=nav.children;

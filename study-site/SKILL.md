@@ -66,7 +66,9 @@ Pick the closest row for an unlisted subject. The user's own course notes overri
 | Reading progress (chapter pages only) | % rises as you scroll: thin bar under the header, % in the sticky strip next to the current section name, and a ring card at the top with modules done / practice answered / correct | Nothing. **Never put this on index pages** |
 | Mark as done | Tick box with "Mark as done" at the **bottom** of each module (box on the left); ✓ in the contents | Unique `id` on each module section |
 | Find | Search icon in the header opens a small find bar; highlights hits and hides non-matching modules | Nothing |
-| Copy image | Hover button on every `figure.fig` copies a PNG (always visible on touch); if the clipboard is blocked, shows the image to press-and-hold | Wrap **every** diagram or image in `figure.fig` |
+| Copy image | Bare icon button at the top right of every `figure.fig`, shown on hover (faint on touch screens); copies a PNG, or shows the image to press-and-hold if the clipboard is blocked | Wrap **every** diagram or image in `figure.fig`. Add class `paper` to always-white images (scanned papers) |
+| Copy buttons | Same icon on every module heading (copies the module), every `h3` (copies up to the next heading) and every `.pyq` question (question + solution). Copies clean Markdown: `##`/`###` headings, `[Figure: caption]`, equations as `$tex$`. If the clipboard is blocked, a box opens with the text selected | Use `h3` for sub-headings inside a module |
+| Equations (maths-heavy subjects) | Uncomment the MathJax block in `<head>`; write `$…$` inline and `$$…$$` display. Normal select-and-copy keeps the LaTeX with no stray line breaks; long inline equations scroll instead of widening the page on phones | At 390px width `document.documentElement.scrollWidth` must be 390 |
 | Mobile friendly | Responsive; tables scroll sideways | Keep SVG `viewBox`-based; no fixed widths |
 | Practice MCQs | Instant feedback; answers remembered | `data-answer` = 0-based index of the right option |
 | Show answer | `details.answer` | Use for every long-form solution |
@@ -96,5 +98,5 @@ For a course index or hub: minimal cards (see settings), same header (find icon 
 
 1. Copy `assets/template.html`, fill the `{{placeholders}}`, delete the course-only blocks for non-course pages (or uncomment them for course pages).
 2. Publish as an artifact (or save the `.html`). Show it first; check after.
-3. Check at desktop and ~390px width, in both themes: every figure has a copy button, every MCQ has a correct `data-answer`, every question has an answer, no `{{placeholders}}` remain.
+3. Check at desktop and ~390px width, in both themes: every figure has a copy button, equations (if any) copy as LaTeX, the page isn't wider than the screen at 390px, every MCQ has a correct `data-answer`, every question has an answer, no `{{placeholders}}` remain.
 4. Add the page link to the master or course index as chosen in step 1. Don't redesign the index.
